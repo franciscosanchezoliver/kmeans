@@ -6,8 +6,10 @@ name: Python application
 on:
   push:
     branches: [ "**" ]
+    path-ignore: 'docks/**'
   pull_request:
     branches: [ "main" ]
+
 
 env:
   MINIMUM_COVERAGE: 80
