@@ -36,7 +36,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Executing tests
       run: |
-        export PYTHONPATH=sentinel
+        export PYTHONPATH=kmeans
         pytest
     - name: Checking test coverage
       run: |
