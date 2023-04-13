@@ -11,7 +11,8 @@ The algorithm follows these _steps_:
 4. **Update centroids**: Calculate the mean of all the points assigned to each cluster and set the centroid of that cluster to the mean.
 5. **Repeat steps 3-4 until convergence**: Keep repeating steps 3-4 until the centroids stop changing or a maximum number of iterations is reached.
 
-After the execution we can evaluate the quality of the clusters using metrics such as within-cluster sum of squares or silhouette score.
+## Metrics
+After the execution we can evaluate the quality of the clusters using metrics such as **within-cluster sum of squares** or **silhouette score**.
 
 ## Improvements
 You can also consider adding some variations to the basic KMeans algorithm, such as **using different distance metrics**, using more **advanced initialization methods**, or **implementing parallelization for faster performance** on large datasets.
