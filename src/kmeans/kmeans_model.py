@@ -1,7 +1,4 @@
-import matplotlib.pyplot as plt
-import seaborn as sns
-import pandas as pd
-from src.maths.vectors import Vector, vector_mean, distance, num_differences
+from maths.vectors import Vector, vector_mean, distance, num_differences
 from typing import List
 import itertools
 import random
@@ -9,14 +6,37 @@ import tqdm
 
 
 class KMeans:
-    def __init__(self, num_clusters: int):
+    """
+    KMeans is a popular unsupervised machine learning algorithm used for clustering data points into groups
+    or clusters based on their similarity.
+    """
+
+    def __init__(self,
+                 num_clusters: int,
+                 save_intermediate_steps: bool = False):
+        """
+        Create the K-Means model object.
+
+        :param num_clusters: Numbers of groups to divide the inputs
+        :param save_intermediate_steps: True if we want to save all the intermediates steps to further analysis.
+        """
         self.num_clusters = num_clusters
+
+        self.save_intermediate_steps = save_intermediate_steps
+        self.intermediate_steps = []
 
         # The mean of each cluster is not yet calculated, that is why we initialize every cluster
         # to an empty list
         self.clusters_mean = [[] for _ in range(num_clusters)]
 
     def train(self, inputs: List[Vector]):
+        """
+        During the training process, the model will separate the inputs into the number of clusters given.
+        After the training the model will be able to select one cluster to an input it has never seen it before.
+
+        :param inputs: the data we want to separate into groups.
+        """
+
         # We start by assigning randomly the inputs to the clusters
         assignments = [random.randrange(self.num_clusters) for _ in inputs]
 
@@ -24,10 +44,14 @@ class KMeans:
         # As we don't know in advance how many iteration we will have to make, then create an infinite loop
         with tqdm.tqdm(itertools.count()) as t:
             for iteration in t:
-                # Calculate the mean of each cluster
-                self.calculate_mean_for_each_cluster(inputs, assignments)
 
-                # self.visualize_training(inputs, assignments)
+                # Calculate the mean of each cluster
+                self._calculate_mean_for_each_cluster(inputs, assignments)
+
+                # If the 'save_intermediate_steps' is set to True then save each step
+                # to review it later
+                if self.save_intermediate_steps:
+                    self.save_intermediate_state(assignments)
 
                 # Classify each input into the closest cluster
                 new_assignments = [self.classify(each_input) for each_input in inputs]
@@ -49,6 +73,8 @@ class KMeans:
     def classify(self, v: Vector):
         """
         Return the index of the cluster closest to the input
+
+        :param v: The input we want to classify
         """
         # Calculate the distance between the input given and each cluster
 
@@ -65,9 +91,15 @@ class KMeans:
 
         return closest_cluster
 
-    def calculate_mean_for_each_cluster(self,
-                                        inputs: List[Vector],
-                                        assignments: List[int]):
+    def _calculate_mean_for_each_cluster(self,
+                                         inputs: List[Vector],
+                                         assignments: List[int]):
+        """
+        KMeans remembers the mean of the samples in each cluster. These are called "centroids".
+
+        :param inputs: the input data
+        :param assignments: which cluster each input belongs to
+        """
         # Create as many groups as clusters
         # Every group will be represented by a list
 
@@ -83,32 +115,14 @@ class KMeans:
         # Calculate the mean for each cluster
         self.clusters_mean = [vector_mean(each_cluster) for each_cluster in clusters]
 
-    def visualize_training(self, inputs, assignments):
+    def save_intermediate_state(self, assignments):
+        """
+        In case we want to store each step given by the algorithm for further analysis.
 
-        # Print the point colored by their clusters
-        x = [_.get(0) for _ in inputs]
-        y = [_.get(1) for _ in inputs]
-        point_type = ["o" for point in range(len(x))]
-        sizes = [10 for point in range(len(x))]
-        cluster_selected = assignments.copy()
-
-        # Add the point for the cluster means
-        for i in range(len(self.clusters_mean)):
-            cluster = self.clusters_mean[i]
-            x.append(cluster.get(0))
-            y.append(cluster.get(1))
-            point_type.append("*")
-            cluster_selected.append(i)
-            sizes.append(20)
-
-        df = pd.DataFrame({"x": x,
-                           "y": y,
-                           "cluster": cluster_selected,
-                           "point_type": point_type,
-                           "size": sizes})
-
-        plt.figure()
-
-        sns.scatterplot(data=df, x='x', y='y', hue='cluster', style='point_type', ec=None,
-                        legend=False, size='size')
-        print("process")
+        :param assignments: The current state for each cluster
+        """
+        new_state = {
+            "state": assignments,
+            "centroids": self.clusters_mean
+        }
+        self.intermediate_steps.append(new_state)
