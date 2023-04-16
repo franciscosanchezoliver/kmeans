@@ -1,4 +1,4 @@
-from maths.vectors import Vector, vector_mean, distance, num_differences
+from src.maths.vectors import Vector, vector_mean, distance, num_differences
 from typing import List
 import itertools
 import random
