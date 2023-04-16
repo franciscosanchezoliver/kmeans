@@ -25,6 +25,8 @@ class KMeans:
         self.save_intermediate_steps = save_intermediate_steps
         self.intermediate_steps = []
 
+        self.inertia = 0
+
         # The mean of each cluster is not yet calculated, that is why we initialize every cluster
         # to an empty list
         self.clusters_mean = [[] for _ in range(num_clusters)]
@@ -62,6 +64,10 @@ class KMeans:
                 num_changes = num_differences(Vector(assignments), Vector(new_assignments))
                 if num_changes == 0:
                     # Stop if there haven't been any changes
+
+                    # Before exit the program, we can now calculate the inertia which is the metric that measure
+                    # how good the model is
+                    self._calculate_inertia(inputs, assignments)
                     return
 
                 # If there have been changes then we need to recalculate the means of each clusters with the
@@ -126,3 +132,37 @@ class KMeans:
             "centroids": self.clusters_mean
         }
         self.intermediate_steps.append(new_state)
+
+    def _calculate_inertia(self,
+                           inputs: List[Vector],
+                           assignments: List[int]):
+        """
+        Inertia, also known as within-cluster sum of squares (WSS), is a metric used to evaluate the performance of
+        KMeans clustering. It measures the sum of squared distances between each data point and its closest centroid,
+        which is essentially a measure of how far the data points are from their assigned cluster center.
+
+        Inertia is minimized during the KMeans clustering process, as the algorithm iteratively adjusts the position
+        of the centroids to minimize the sum of squared distances. The goal is to find the value
+        of K (the number of clusters) that results in the lowest possible inertia.
+
+        Inertia is useful for determining the optimal number of clusters to use in a KMeans model. As the
+        number of clusters increases, inertia tends to decrease, because there are more centroids to which data
+        points can be assigned. However, at some point, adding more clusters will result in diminishing
+        returns in terms of reducing inertia, as the additional centroids may not capture any significant
+        patterns in the data. Therefore, one common approach to selecting the optimal number of clusters is
+        to plot the inertia as a function of K and look for a "knee" in the curve, which represents the point
+        where adding more clusters results in little additional reduction in inertia.
+
+        :param inputs:
+        :return:
+        """
+
+        total_distance_sum = 0
+        # for each point calculate the distance between the point and its cluster
+        for index, input in enumerate(inputs):
+            distance_between_point_and_cluster = 0
+            input_cluster = self.clusters_mean[assignments[index]]
+            distance_between_point_and_cluster = distance(input, input_cluster)
+            total_distance_sum += distance_between_point_and_cluster
+
+        self.inertia = total_distance_sum

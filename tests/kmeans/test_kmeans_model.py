@@ -33,8 +33,7 @@ class TestKmeansModel(unittest.TestCase):
         kmeans.train(inputs=vectors)
 
         self.assertEqual(len(kmeans.clusters_mean), 3)
-
-        print(points)
+        self.assertTrue(kmeans.inertia > 0)
 
     def test_execute_with_intermediate_steps(self):
         random.seed(12)
@@ -63,5 +62,3 @@ class TestKmeansModel(unittest.TestCase):
         kmeans = KMeans(num_clusters=3,
                         save_intermediate_steps=True)
         kmeans.train(inputs=vectors)
-
-        print(points)
