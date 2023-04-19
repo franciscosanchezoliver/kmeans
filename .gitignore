@@ -1,4 +1,4 @@
-sentinel-env/*
+venv/*
 .idea/*
 notebooks/.ipynb_checkpoints/
 **/__pycache__
