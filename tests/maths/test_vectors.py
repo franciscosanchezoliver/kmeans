@@ -13,12 +13,12 @@ class TestVectors(unittest.TestCase):
     def test_vectors_has_same_size(self):
         v1 = Vector([1, 1])
         v2 = Vector([2, 2])
-        self.assertTrue(vectors_has_same_length([v1, v2]))
+        self.assertTrue(vectors_have_same_length([v1, v2]))
 
     def test_vectors_has_not_same_size(self):
         v1 = Vector([1, 1, 0])
         v2 = Vector([2, 2])
-        self.assertFalse(vectors_has_same_length([v1, v2]))
+        self.assertFalse(vectors_have_same_length([v1, v2]))
 
     def test_num_differences_between_vectors(self):
         v1 = Vector([1, 2, 3])
@@ -61,7 +61,7 @@ class TestVectors(unittest.TestCase):
     def test_subtract_vectors(self):
         v1 = Vector([3, 4])
         v2 = Vector([5, 1])
-        sum_vector = vector_substract(v1, v2)
+        sum_vector = vector_subtract(v1, v2)
         self.assertEqual(sum_vector.values, [-2, 3])
 
     def test_sum_of_squares(self):
