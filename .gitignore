@@ -7,3 +7,4 @@ notebooks/.ipynb_checkpoints/
 /reports/coverage
 secure
 .vscode/
+dist/

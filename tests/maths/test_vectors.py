@@ -1,7 +1,7 @@
 import unittest
 import pytest
 
-from src.maths.vectors import *
+from kmeans.maths.vectors import *
 
 
 class TestVectors(unittest.TestCase):

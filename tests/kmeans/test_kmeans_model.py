@@ -1,6 +1,6 @@
 import unittest
-from src.kmeans.kmeans_model import KMeans
-from src.maths.vectors import Vector
+from kmeans import KMeans
+from kmeans.maths.vectors import Vector
 import numpy as np
 import random
 
@@ -12,7 +12,6 @@ class TestKmeansModel(unittest.TestCase):
         # Generate random points
         random.seed(12)
         n_points = 20
-        points = []
 
         y_max = 40
         y_min = -30
@@ -38,8 +37,6 @@ class TestKmeansModel(unittest.TestCase):
     def test_execute_with_intermediate_steps(self):
         random.seed(12)
         n_points = 20
-        n_clusters = 3
-        points = []
 
         y_max = 40
         y_min = -30
