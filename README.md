@@ -16,4 +16,4 @@ After the execution we can evaluate the quality of the clusters using metrics su
 You can also consider adding some variations to the basic KMeans algorithm, such as **using different distance metrics**, using more **advanced initialization methods**, or **implementing parallelization for faster performance** on large datasets.
 
 ## 👩‍🏫 Example
-[Notebook](http://localhost:8888/notebooks/notebooks/example_delivery_company.ipynb) with a little example.
+[Notebook](https://github.com/franciscosanchezoliver/kmeans/blob/main/notebooks/example_delivery_company.ipynb) with a little example.
