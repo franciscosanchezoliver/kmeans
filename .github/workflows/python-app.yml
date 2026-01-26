@@ -43,5 +43,5 @@ jobs:
         pytest
     - name: Checking test coverage
       run: |
-        pytest --cov-report term tests/ --cov=src/ --cov-fail-under=$MINIMUM_COVERAGE
+        pytest --cov-report term tests/ --cov=kmeans/ --cov-fail-under=$MINIMUM_COVERAGE
 

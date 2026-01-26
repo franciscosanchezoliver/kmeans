@@ -1,5 +1,5 @@
 ## Flake8
-flake8 src/
+flake8 kmeans/
 
 ### Error codes
 https://pep8.readthedocs.io/en/latest/intro.html#error-codes

@@ -11,7 +11,7 @@ readme = "README.md"
 requires-python = ">=3.9"
 
 [tool.setuptools]
-package-dir = {"" = "src"}
+package-dir = {"" = "kmeans"}
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["kmeans"]
